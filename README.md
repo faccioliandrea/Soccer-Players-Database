@@ -1,6 +1,6 @@
 # Soccer-Players-Database
 
-This Python script let you scrape soccer players and teams data from a [public website](https://www.bdfutbol.com/en/index.html).
+This Python script lets you scrape soccer players and teams data from a [public website](https://www.bdfutbol.com/en/index.html).
 
 ### 🏟️ Supported leagues
 * Serie A (Italy)
