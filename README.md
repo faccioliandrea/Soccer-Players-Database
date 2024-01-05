@@ -15,11 +15,11 @@ The script creates three .xlsx/.csv files:
 
 * players.xlsx
  
-| displayName | fullName | nation | **birthDate** | link |
+| displayName | _fullName_ | nation | _birthDate_ | link |
 |-------------|----------|--------|---------------|------|
 * teams.xlsx
  
-| teamId | teamName | leagueName |
+| _teamId_ | teamName | leagueName |
 |--------|----------|------------|
 * players_teams.xlsx
  
