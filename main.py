@@ -34,18 +34,15 @@ def extract_teams(link, leagueName):
 
         teams_params = [(team.select("td")[3].select("a")[0].text, team["data-ideq"]) for team in teams_rows]
 
-        # Create the threads
+        # Create thread for parallel execution
         threads = [threading.Thread(target=extract_team, args=(team,)) for team in teams_params]
 
-        # Start the threads
         for thread in threads:
             thread.start()
 
-        # Wait for threads termination
         for thread in threads:
             thread.join()
 
-        #
         for team in teams_rows:
 
             teamName = team.select("td")[3].select("a")[0].text
@@ -81,7 +78,7 @@ def extract_team(x):
     all_squad_data = pd.DataFrame()
     team_relations_data = pd.DataFrame()
 
-    # Loop seasons: 2000-01 to 2023-24
+    # Loop seasons: 2000-2001 to 2023-2024
     for season in range(2000, 2024):
         # URL template for current season
         url = f"https://www.bdfutbol.com/en/t/t{season}-{(season + 1) % 100:02d}{teamId}.html?t=plantilla"
@@ -93,7 +90,7 @@ def extract_team(x):
 
             soup = BeautifulSoup(response.text, 'html.parser')
 
-            # Extract player data and player-team relation
+            # Extract player data and player-team relations
             players_data = []
             players_relation = []
             table1 = soup.find_all("table", {"class": "taula_estil sortable"})[0]
@@ -133,7 +130,6 @@ def extract_team(x):
 
     # Acquire lock and update global DataFrame
     with lock:
-
         # Join DataFrame and remove duplicates
         global players
         players = pd.concat([players, all_squad_data], ignore_index=True).drop_duplicates(subset=["fullName", "birthDate"])
@@ -148,7 +144,7 @@ def extract_team(x):
 
 if __name__ == '__main__':
 
-    # Start data extraction by passing League URL and name.
+    # Start data extraction by passing League URL and League name.
     extract_teams("https://www.bdfutbol.com/en/t/tita2023-24.html", "Serie A")
     extract_teams("https://www.bdfutbol.com/en/t/teng2023-24.html", "Premier League")
     extract_teams("https://www.bdfutbol.com/en/t/t2023-24.html", "La Liga")
